@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Capital City</title>
+    <title>Find Information About a Country</title>
 </head>
 <body>
-    <h1>Capital City of the US</h1>
-    <p>{{ capital_city }}</p>
+    <h1>Find the Capital City</h1>
+    <form method="post">
+        <label for="country_code">Enter Country Code (e.g., "US"):</label>
+        <input type="text" id="country_code" name="country_code">
+        <button type="submit">Find Information</button>
+    </form>
+    {% if capital_city %}
+        <h2>Country Flag:</h2>
+        <img src="{{ capital_city }}" alt="Country Flag">
+    {% endif %}
 </body>
 </html>
