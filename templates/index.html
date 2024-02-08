@@ -1,18 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Find Information About a Country</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebrity Information</title>
+    <link rel="stylesheet" href="./style.css">
+    
 </head>
-<body>
-    <h1>Find the Capital City</h1>
+<body bgcolor="blue";>
+    <div style="display: flex; align-items: center; flex-direction: column; justify-content: center; min-height: 100vh;">
+    <h1>Find Celebrity Information</h1>
     <form method="post">
-        <label for="country_code">Enter Country Code (e.g., "US"):</label>
-        <input type="text" id="country_code" name="country_code">
-        <button type="submit">Find Information</button>
+        <label for="celebrity_name">Enter Celebrity Name:</label>
+        <input type="text" id="celebrity_name" name="celebrity_name" required>
+        <button type="submit">Search</button>
     </form>
-    {% if capital_city %}
-        <h2>Country Flag:</h2>
-        <img src="{{ capital_city }}" alt="Country Flag">
+
+
+    {% if error %}
+        <p>{{ error }}</p>
+
+    {% else %}
+        {% if celebrity_name %}
+            <h2 style="margin-top: 100px;">Celebrity Name: {{ celebrity_name }}</h2>
+        {% else %}
+                <p>Name not available.</p>
+        {% endif %}
+
+        <div style="display: flex; justify-content: space-around ; min-width: 25vw;">
+        {% if birth_date %}
+        <h2 > Birth Date: {{ birth_date }}</h2>
+    {% else %}
+            <p>Birth Date not available.</p>
     {% endif %}
+
+    {% if age %}
+        <h2> Age: {{ age }}</h2>
+    {% else %}
+            <p>Age not available.</p>
+            {% endif %}
+
+        </div>
+
+
+
+            <div style="display: flex; justify-content: space-around ; min-width: 30vw; margin-top: 5vh;">
+               
+          
+                {% if nationality %}
+    <h2> Nationality: {{ nationality }}</h2>
+{% else %}
+        <p>Unknown Nationality not available.</p>
+
+
+        {% if country_flag %}
+      <img src="{{country_flag}}" alt="Country-flag">
+    {% else %}
+        <p>No flag available.</p>
+            {% endif %}
+</div>
+    {% endif %}
+
+            
+
+    {% endif %}
+</div>
 </body>
 </html>
