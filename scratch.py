@@ -5,34 +5,53 @@ from zeep import Client
 app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    if request.method == 'POST' and 'celebrity_name' in request.form:
-        celebrity_name = request.form['celebrity_name'].lower()
-        celebrity_info_url = f'https://api.api-ninjas.com/v1/celebrity?name={celebrity_name}'
-        celebrity_response = requests.get(celebrity_info_url, headers={'X-Api-Key': 'g6xtlmtdodBhSqZ0MP4hrA==1s79fFkgQcdxm3nt'})
+    if request.method == 'POST' and 'movie_name' in request.form:
+        movie_name = request.form['movie_name'].lower()
+        url = "https://movie-database-alternative.p.rapidapi.com/"
+        querystring = {"s":movie_name,"r":"json","page":"1"}
+        headers = {
+        "X-RapidAPI-Key": "7476ee983dmshf63250f46fec516p11287fjsn873e15c8eda0",
+        "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com"
+        }
 
-        if celebrity_response.status_code == 200:
-            celebrity_data = celebrity_response.json()[0]['name'].title()
-            location = celebrity_response.json()[0]['nationality'] 
+        movie_response = requests.get(url, headers=headers, params=querystring)
+        
+        
+       
+
+        if movie_response.status_code == 200:
+
+            imdb_ID = movie_response.json()['Search'][0]['imdbID']
+            querystring = {"r": "json", "i": imdb_ID}
+
+            celeb_response = requests.get(url, headers=headers, params=querystring)
+            actor = celeb_response.json()['Actors']
+            all_actors =celeb_response.json()['Actors']
+            temp = actor.find(',')
+            actor = actor[:temp]
+            actor = actor.replace(".", "")
+
+
+            celebrity_info_url = f'https://api.api-ninjas.com/v1/celebrity?name={actor}'
+            celebrity_response = requests.get(celebrity_info_url, headers={'X-Api-Key': 'g6xtlmtdodBhSqZ0MP4hrA==1s79fFkgQcdxm3nt'})
+            print(celebrity_response.text)
+            location = celebrity_response.json()[0]['nationality']
+            birthday = celebrity_response.json()[0]['birthday']
+           
+           
             # Now use the location to get the country name
             wsdl = 'http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL'
             client = Client(wsdl=wsdl)
             result = client.service.FullCountryInfo(location.upper())
-
-            url = "https://search-celebrity-biography.p.rapidapi.com/search/miley%20cyrus"
-
-            headers = {"X-RapidAPI-Key": "7476ee983dmshf63250f46fec516p11287fjsn873e15c8eda0",
-                       "X-RapidAPI-Host": "search-celebrity-biography.p.rapidapi.com"}
-
-            new_response = requests.get(url, headers=headers)
-            birth_date = age = new_response.json()['moreFacts'][1]['value']
-            age = new_response.json()['moreFacts'][2]['value']
-            birth_loc = new_response.json()['moreFacts'][21]['value']
-            nationality = new_response.json()['moreFacts'][22]['value']
-
-            
             country_flag = result['sCountryFlag']
-            return render_template('index.html', celebrity_name=celebrity_data, country_flag=country_flag,
-                                     birth_date = birth_date, age=age)
+            country_name = result['sName']
+            city = result['sCapitalCity']
+
+            api_url = 'https://api.api-ninjas.com/v1/weather?city={}'.format(city)
+            response = requests.get(api_url, headers={'X-Api-Key': 'g6xtlmtdodBhSqZ0MP4hrA==1s79fFkgQcdxm3nt'})
+            temp = response.json()['temp']
+
+            return render_template('index.html', movie_name=movie_name, actor = all_actors,nationality = location,birth_date = birthday, country_flag = country_flag, country_name = country_name, temp = temp,city= city)
         else:
             return render_template('index.html', error='Failed to fetch celebrity data.')
 
