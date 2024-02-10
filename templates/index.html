@@ -1,67 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Celebrity Information</title>
-    <link rel="stylesheet" href="./style.css">
-    
+    <title>Movie/ Tv Series Information</title>
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
-<body style='background-color:powderblue; display: flex; align-items: center; justify-content: center;'>
+<body>
 
-    <div style="border-style: inset;
-    border-width: medium;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 20px auto; /* Centers the box horizontally */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    max-width: 600px; /* Adjust as needed to make the box narrower */
-    width: 100%;">
-        <div style="display: flex; align-items: center; flex-direction: column; justify-content: center; min-height: 100vh;">
-    <h1>Find Movie Information</h1>
-    <form method="post">
-        <label for="movie_name"><h2>Name a Movie or Tv Series :</h2></label>
-        <input type="text" id="movie_name" name="movie_name" required>
-        <button type="submit">Search</button>
-    </form>
+    <div class="main-container">
+        <div class="content-container">
+            <h1>Find Movie Information</h1>
+            <form method="post">
+                <label for="movie_name"><h2>Name a Movie or Tv Series :</h2></label>
+                <input type="text" id="movie_name" name="movie_name" required>
+                <button type="submit">Search</button>
+            </form>
 
+            {% if error %}
+            <p>{{ error }}</p>
+            {% else %}
+                {% if movie_name %}
+                <h2 class="actor-info"> Actor : {{ actor }}</h2>
+                {% else %}
+                <p>Name not available.</p>
+                {% endif %}
 
-{% if error %}
-<p>{{ error }}</p>
+                <div class="birth-date-container">
+                    {% if birth_date %}
+                    <h2> Birth Date: {{ birth_date }}</h2>
+                    {% else %}
+                    <p>Birth Date not available.</p>
+                    {% endif %}
+                </div>
 
-{% else %}
-{% if movie_name %}
-<h2 style="margin-top: 100px;"> Actor : {{ actor }}</h2>
-{% else %}
-<p>Name not available.</p>
-{% endif %}
+                <div class="nationality-container">
+                    {% if nationality %}
+                    <h2> Nationality: {{country_name }} where the capital city is {{city}} and it has a current temperature of {{temp}} degree Celsius</h2>
+                    {% else %}
+                    <p>Unknown Nationality not available.</p>
+                    {% endif %}
 
-<div style="display: flex; justify-content: space-around ; min-width: 25vw;">
-{% if birth_date %}
-<h2 > Birth Date: {{ birth_date }}</h2>
-{% else %}
-<p>Birth Date not available.</p>
-{% endif %}
-</div>
-
-<div style="display: flex; justify-content: space-around ; min-width: 30vw; margin-top: 5vh;">
-          
-{% if nationality %}
-<h2> Nationality: {{country_name }} where the capital city {{city}} has a current temperature of {{temp}}</h2>
-{% else %}
-<p>Unknown Nationality not available.</p>
-{% endif %}
-
-{% if country_flag %}
-<img src="{{country_flag}}" alt="Country-flag">
-{% else %}
-<p>No flag available.</p>
-{% endif %}
-</div>
-
-
-    {% endif %}
-
-</div>
-</div>
+                    {% if country_flag %}
+                    <img src="{{country_flag}}" alt="Country-flag">
+                    {% else %}
+                    <p>No flag available.</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>

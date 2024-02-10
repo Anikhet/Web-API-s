@@ -1,0 +1,124 @@
+:root {
+    --poppy: #db2b39;
+    --delft-blue: #29335c;
+    --orange-web: #f3a712;
+    --sunset: #f0cea0;
+    --walnut-brown: #534d41;
+  }
+  
+  body {
+    background: var(--delft-blue);
+    font-family: 'Arial', sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .main-container {
+    background-color: var(--walnut-brown);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    max-width: 800px;
+    width: 100%;
+  }
+  
+ .content-container:hover{
+
+
+  }
+  
+  /* Styling for form and content */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--poppy);
+    background-color: var(--delft-blue);
+    color: white;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: var(--orange-web);
+    color: var(--delft-blue);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 2px var(--poppy);
+  }
+  
+  button:hover {
+    background-color: var(--sunset);
+    transform: translateY(-2px);
+    box-shadow: 0 4px var(--poppy);
+  }
+  
+  /* Typography styles */
+  h1 {
+    color: white;
+    font-size: 3rem;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    display: block;
+    text-align: center;
+    margin: 0 auto 2rem auto;
+    padding: 1rem;
+    background: var(--poppy);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px var(--poppy);
+    max-width: max-content;
+  }
+  
+  h2 {
+    font-size: 20px;
+    color: white;
+  }
+  
+  p {
+    color: white;
+  }
+  .nationality-container {
+    text-align: center; /* Aligns the text and inline elements like images to the center */
+  }
+  
+  .nationality-container img {
+    display: block; /* Images are inline by default. Change it to block to apply margin auto */
+    margin: 0 auto; /* This will center the image horizontally */
+    max-width: 100%; /* Makes sure the image is responsive and does not overflow its container */
+    height: auto; /* Keeps the aspect ratio of the image */
+  }
+  
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+  
+    h2 {
+      font-size: 18px;
+    }
+  
+    form {
+      gap: 20px;
+    }
+  
+    input[type="text"], button {
+      padding: 8px;
+    }
+  }
+  
+  
